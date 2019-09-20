@@ -1,0 +1,53 @@
+body {
+    background: rgb(12, 13, 17);
+}
+
+.block {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.result {
+    height: 200px;
+    width: 150px;
+    font-size: 150px;
+    line-height: 200px;
+    text-align: center;
+    color: #fff;
+}
+
+.plus, .minus {
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+
+.plus:before, .minus:before {
+    display: block;
+    content: "";
+    height: 10px;
+    background: #fff;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 50%;
+    margin-top: -5px;
+    border-radius: 5px;
+}
+
+.plus:after {
+    display: block;
+    content: "";
+    width: 10px;
+    height: 90%;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    bottom: 10%;
+    margin-left: -5px;
+    border-radius: 5px;
+}
