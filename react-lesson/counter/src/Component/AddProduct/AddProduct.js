@@ -15,17 +15,18 @@ export default class AddProduct extends React.Component {
   inputIdRef = React.createRef();
   inputPriceRef = React.createRef();
   inputQuantityRef = React.createRef();
+  inputUrlRef =  React.createRef();
 
   handleClick = e => {
     e.preventDefault();
     let value = {
       title: this.inputTitleRef.current.value,
-      id: this.inputIdRef.current.value,
-      price: this.inputPriceRef.current.value,
-      quantity: this.inputQuantityRef.current.value,
+      url: this.inputUrlRef.current.value,
+      id: parseInt(this.inputIdRef.current.value),
+      price: parseInt(this.inputPriceRef.current.value),
+      quantity: parseInt(this.inputQuantityRef.current.value),
       selectedOption: this.state.selectedOption
     };
-    this.context.addToLocalStorage(value);
     this.context.addProduct(value);
 
     this.inputTitleRef.current.value = "";
@@ -62,21 +63,23 @@ export default class AddProduct extends React.Component {
         <h2 className={s.h2}>Add Product</h2>
         <div className={s.addCard}>
           <form className={s.card}>
-            <img src={img} className="card-img-top" alt="qwe" />
             <div className="card-body">
+                <h5 className="card-title">
+                    Product url: <input type="text" ref={this.inputUrlRef} className={s.input}/>
+                </h5>
               <h5 className="card-title">
-                Card title: <input type="text" ref={this.inputTitleRef} />
+                Card title: <input type="text" ref={this.inputTitleRef} className={s.input}/>
               </h5>
             </div>
             <ul className="list-group list-group-flush">
               <li className="list-group-item">
-                ID: <input type="text" ref={this.inputIdRef} />
+                ID: <input type="text" ref={this.inputIdRef} className={s.input} />
               </li>
               <li className="list-group-item">
-                Price: <input type="number" ref={this.inputPriceRef} />
+                Price: <input type="number" ref={this.inputPriceRef} className={s.input} />
               </li>
               <li className="list-group-item">
-                Quantity: <input type="number" ref={this.inputQuantityRef} />
+                Quantity: <input type="number" ref={this.inputQuantityRef} className={s.input} />
               </li>
             </ul>
             <div className={`${"form-check "} ${s.radioCheck}`}>
@@ -102,13 +105,12 @@ export default class AddProduct extends React.Component {
               </p>
             </div>
             <div className="card-body">
-              <Link
-                to="/admin"
-                type="button"
-                className="btn btn-success"
-                onClick={this.handleClick}
-              >
-                Add
+              <Link to="/admin">
+              <button type="button"
+                      className="btn btn-success"
+                      onClick={this.handleClick}>
+                  Add
+              </button>
               </Link>
             </div>
           </form>

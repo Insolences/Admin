@@ -38,8 +38,8 @@ export default class Admin extends React.Component {
             <Product
               key={index}
               title={el.title}
+              url={el.url}
               isAdmin={true}
-              index={el.index}
               id={el.id}
               quantity={el.quantity}
               price={el.price}

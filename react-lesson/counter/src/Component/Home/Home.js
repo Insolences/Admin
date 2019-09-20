@@ -33,7 +33,6 @@ export default class Home extends React.Component {
               key={index}
               title={el.title}
               isAdmin={false}
-              index={el.index}
               id={el.id}
               quantity={el.quantity}
               price={el.price}

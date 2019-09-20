@@ -9,31 +9,29 @@ import { AppContext } from "../../Context";
 
 export default class App extends React.Component {
   state = {
-    products: []
+    products: [
+        {title: 'Honda Accord' , price:200000, id: 1, quantity: 3, selectedOption: "In Stock", url: 'https://a.d-cd.net/f3a2c4as-480.jpg'},
+        {title: 'Audi A6', price:450000, id: 2, quantity: 0, selectedOption: "Not In Stock", url: 'http://dom-cvety.com/photo/9-0/1134_rrrre-1920.jpg'},
+        {title: 'Ford', price:600000, id: 3, quantity: 3, selectedOption: "In Stock", url:'http://catalogcars.net/wp-content/uploads/2014/1/ford_42.jpg'}
+        ]
   };
 
   addProduct = value => {
     let newProducts = this.state.products.slice();
     let id = value.id;
     let found = newProducts.some(el => {
-      return el.id === id;
+      return el.id == id;
     });
     if (found) {
-      this.addToLocalStorage(newProducts);
       alert("Товар с данным id существует");
     } else if (!found) {
-      newProducts.push({ ...value });
-      this.addToLocalStorage(newProducts);
+      newProducts.push(value);
       alert("Продукт добавлен");
+
     }
     this.setState({
       products: newProducts
     });
-  };
-
-  addToLocalStorage = newProducts => {
-    const productString = JSON.stringify(newProducts);
-    localStorage.setItem("products", productString);
   };
 
   deleteProduct = id => {
@@ -44,20 +42,11 @@ export default class App extends React.Component {
       })
       .indexOf(id);
     ~idToDelete && newProducts.splice(idToDelete, 1);
-    this.deleteFromLocalStorage(newProducts);
     this.setState({
       products: newProducts
     });
   };
 
-  deleteFromLocalStorage = newProducts => {
-    const productString = JSON.stringify(newProducts);
-    localStorage.setItem("products", productString);
-  };
-
-  componentDidMount() {
-    window.localStorage.clear();
-  }
 
   render() {
     return (
@@ -66,10 +55,9 @@ export default class App extends React.Component {
           products: this.state.products,
           addProduct: this.addProduct,
           deleteProduct: this.deleteProduct,
-          addToLocalStorage: this.addToLocalStorage,
           selectedOption: this.selectedOption
         }}
-      >
+      >{console.log(this.state.products)}
         <Router>
           <Route path="/" exact component={Home} />
           <Route path="/admin" exact component={Admin} />

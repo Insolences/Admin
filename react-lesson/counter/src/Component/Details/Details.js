@@ -1,15 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import s from "../Product/Product.module.css";
+import s from "./Details.module.css";
 import img from "../../qwe.jpg";
+import {AppContext} from "../../Context";
 
 export default class Details extends React.Component {
+  static contextType = AppContext;
   state = {};
 
   componentDidMount() {
     const id = parseInt(this.props.match.params.id);
-    const products = JSON.parse(localStorage.getItem("products"));
-    const item = products.find(el => el.id === id);
+    const item = this.context.products.find(el => el.id === id);
     this.setState({
       title: item.title,
       price: item.price,
@@ -39,13 +40,13 @@ export default class Details extends React.Component {
             Admin
           </Link>
         </nav>
-        <h2>Details</h2>
+        <h2 className={s.h2}>Details</h2>
         <div className={`${"card "} ${s.card}`}>
-          <img src={img} className="card-img-top" alt="qwe" />
-          <div className="card-body">
+          <img src={this.state.url} className="card-img-top" alt="qwe" />
+          <div className={`${"card-body "} ${s.body}`} >
             <h5 className="card-title">Title: {this.state.title}</h5>
           </div>
-          <ul className="list-group list-group-flush">
+          <ul className={`${"list-group list-group-flush"} ${s.list}`}>
             <li className="list-group-item">ID: {this.state.id}</li>
             <li className="list-group-item">Price: {this.state.price} $</li>
             <li className="list-group-item">Quantity: {this.state.quantity}</li>

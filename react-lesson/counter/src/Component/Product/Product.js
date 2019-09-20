@@ -11,6 +11,12 @@ export default class Product extends React.Component {
     this.context.deleteProduct(this.props.id);
   };
 
+  renderImg = ()=>{
+    return (this.props.url?
+        <img src={this.props.url} className={`${"card-img-top "} ${s.img}`} alt="qwe" />:
+        <img src={img} className={`${"card-img-top "} ${s.img}`} alt="qwe" />)
+  };
+
   renderProducts = () => {
     if (this.props.isAdmin) {
       {
@@ -55,7 +61,7 @@ export default class Product extends React.Component {
           this.props.selectedOption == "Not In Stock" ? s.cardIsEmpty : " "
         }`}
       >
-        <img src={img} className="card-img-top" alt="qwe" />
+          {this.renderImg()};
         <div className="card-body">
           <h5 className="card-title">Title:{this.props.title}</h5>
         </div>
