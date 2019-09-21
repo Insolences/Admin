@@ -10,10 +10,31 @@ import { AppContext } from "../../Context";
 export default class App extends React.Component {
   state = {
     products: [
-        {title: 'Honda Accord' , price:200000, id: 1, quantity: 3, selectedOption: "In Stock", url: 'https://a.d-cd.net/f3a2c4as-480.jpg'},
-        {title: 'Audi A6', price:450000, id: 2, quantity: 0, selectedOption: "Not In Stock", url: 'http://dom-cvety.com/photo/9-0/1134_rrrre-1920.jpg'},
-        {title: 'Ford', price:600000, id: 3, quantity: 3, selectedOption: "In Stock", url:'http://catalogcars.net/wp-content/uploads/2014/1/ford_42.jpg'}
-        ]
+      {
+        title: "Honda Accord",
+        price: 200000,
+        id: 1,
+        quantity: 3,
+        selectedOption: "In Stock",
+        url: "https://a.d-cd.net/f3a2c4as-480.jpg"
+      },
+      {
+        title: "Audi A6",
+        price: 450000,
+        id: 2,
+        quantity: 0,
+        selectedOption: "Not In Stock",
+        url: "http://dom-cvety.com/photo/9-0/1134_rrrre-1920.jpg"
+      },
+      {
+        title: "Ford",
+        price: 600000,
+        id: 3,
+        quantity: 3,
+        selectedOption: "In Stock",
+        url: "http://catalogcars.net/wp-content/uploads/2014/1/ford_42.jpg"
+      }
+    ]
   };
 
   addProduct = value => {
@@ -22,13 +43,26 @@ export default class App extends React.Component {
     let found = newProducts.some(el => {
       return el.id == id;
     });
+
     if (found) {
       alert("Товар с данным id существует");
     } else if (!found) {
       newProducts.push(value);
       alert("Продукт добавлен");
-
     }
+    this.setState({
+      products: newProducts
+    });
+  };
+
+  editProduct = (value, id) => {
+    let newProducts = this.state.products.slice();
+    let idToEdit = newProducts
+      .map(item => {
+        return item.id;
+      })
+      .indexOf(id);
+    ~idToEdit && newProducts.splice(idToEdit, 1, value);
     this.setState({
       products: newProducts
     });
@@ -47,7 +81,6 @@ export default class App extends React.Component {
     });
   };
 
-
   render() {
     return (
       <AppContext.Provider
@@ -55,9 +88,10 @@ export default class App extends React.Component {
           products: this.state.products,
           addProduct: this.addProduct,
           deleteProduct: this.deleteProduct,
-          selectedOption: this.selectedOption
+          selectedOption: this.selectedOption,
+          editProduct: this.editProduct
         }}
-      >{console.log(this.state.products)}
+      >
         <Router>
           <Route path="/" exact component={Home} />
           <Route path="/admin" exact component={Admin} />

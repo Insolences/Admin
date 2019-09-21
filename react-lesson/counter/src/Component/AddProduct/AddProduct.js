@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../Context";
 import s from "./AddProduct.module.css";
-import img from "../../qwe.jpg";
+import { Input } from "../Input";
+import { Navigation } from "../Navigation/Navigation";
 
 export default class AddProduct extends React.Component {
   static contextType = AppContext;
@@ -15,7 +16,7 @@ export default class AddProduct extends React.Component {
   inputIdRef = React.createRef();
   inputPriceRef = React.createRef();
   inputQuantityRef = React.createRef();
-  inputUrlRef =  React.createRef();
+  inputUrlRef = React.createRef();
 
   handleClick = e => {
     e.preventDefault();
@@ -27,6 +28,7 @@ export default class AddProduct extends React.Component {
       quantity: parseInt(this.inputQuantityRef.current.value),
       selectedOption: this.state.selectedOption
     };
+
     this.context.addProduct(value);
 
     this.inputTitleRef.current.value = "";
@@ -44,46 +46,45 @@ export default class AddProduct extends React.Component {
   render() {
     return (
       <>
-        <nav className="nav nav-pills flex-column flex-sm-row">
-          <Link
-            to="/"
-            className="flex-sm-fill text-sm-center nav-link "
-            href="#"
-          >
-            Home
-          </Link>
-          <Link
-            to="/admin"
-            className="flex-sm-fill text-sm-center nav-link"
-            href="#"
-          >
-            Admin
-          </Link>
-        </nav>
+        <Navigation />
         <h2 className={s.h2}>Add Product</h2>
         <div className={s.addCard}>
           <form className={s.card}>
             <div className="card-body">
-                <h5 className="card-title">
-                    Product url: <input type="text" ref={this.inputUrlRef} className={s.input}/>
-                </h5>
               <h5 className="card-title">
-                Card title: <input type="text" ref={this.inputTitleRef} className={s.input}/>
+                Product url: <Input type="text" ref={this.inputUrlRef} />
+              </h5>
+              <h5 className="card-title">
+                Card title:{" "}
+                <Input type="text" ref={this.inputTitleRef} required />
               </h5>
             </div>
             <ul className="list-group list-group-flush">
               <li className="list-group-item">
-                ID: <input type="text" ref={this.inputIdRef} className={s.input} />
+                ID: <Input type="text" ref={this.inputIdRef} required />
               </li>
               <li className="list-group-item">
-                Price: <input type="number" ref={this.inputPriceRef} className={s.input} />
+                Price:{" "}
+                <Input
+                  type="number"
+                  ref={this.inputPriceRef}
+                  pattern="\d+"
+                  required
+                />
               </li>
               <li className="list-group-item">
-                Quantity: <input type="number" ref={this.inputQuantityRef} className={s.input} />
+                Quantity:{" "}
+                <Input
+                  type="number"
+                  ref={this.inputQuantityRef}
+                  pattern="\d+"
+                  required
+                />
               </li>
             </ul>
             <div className={`${"form-check "} ${s.radioCheck}`}>
               <p>
+                <p>STATUS:</p>
                 <input
                   name="In Stock"
                   type="radio"
@@ -106,11 +107,13 @@ export default class AddProduct extends React.Component {
             </div>
             <div className="card-body">
               <Link to="/admin">
-              <button type="button"
-                      className="btn btn-success"
-                      onClick={this.handleClick}>
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={this.handleClick}
+                >
                   Add
-              </button>
+                </button>
               </Link>
             </div>
           </form>

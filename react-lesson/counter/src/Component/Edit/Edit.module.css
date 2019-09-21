@@ -1,7 +1,11 @@
-.h2{
-    text-align: center;
-    color: #ffc107;
+.card{
+    width: 100%;
+    margin-top: 15px;
+    margin-right: 20px;
+    background-color: #fff;
 }
+
+
 
 .radioCheck{
     display: flex;
@@ -11,14 +15,12 @@
     margin: 15px;
 }
 
-.card{
-    width: 100%;
-    margin-top: 15px;
-    margin-right: 20px;
-    background-color: #fff;
+.h2{
+    color: #ffc107;
+    text-align: center;
 }
 
-.addCard{
+.editCard{
     width: 80%;
     display: flex;
     align-items: center;

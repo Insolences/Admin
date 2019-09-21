@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import s from "./Details.module.css";
 import img from "../../qwe.jpg";
-import {AppContext} from "../../Context";
+import { AppContext } from "../../Context";
+import { Navigation } from "../Navigation/Navigation";
 
 export default class Details extends React.Component {
   static contextType = AppContext;
@@ -21,29 +21,26 @@ export default class Details extends React.Component {
     });
   }
 
+  renderImg = () => {
+    return this.state.url ? (
+      <img
+        src={this.state.url}
+        className={`${"card-img-top "} ${s.img}`}
+        alt="qwe"
+      />
+    ) : (
+      <img src={img} className={`${"card-img-top "} ${s.img}`} alt="qwe" />
+    );
+  };
+
   render() {
     return (
       <>
-        <nav className="nav nav-pills flex-column flex-sm-row">
-          <Link
-            to="/"
-            className="flex-sm-fill text-sm-center nav-link "
-            href="#"
-          >
-            Home
-          </Link>
-          <Link
-            to="/admin"
-            className="flex-sm-fill text-sm-center nav-link"
-            href="#"
-          >
-            Admin
-          </Link>
-        </nav>
+        <Navigation />
         <h2 className={s.h2}>Details</h2>
         <div className={`${"card "} ${s.card}`}>
-          <img src={this.state.url} className="card-img-top" alt="qwe" />
-          <div className={`${"card-body "} ${s.body}`} >
+          {this.renderImg()}
+          <div className={`${"card-body "} ${s.body}`}>
             <h5 className="card-title">Title: {this.state.title}</h5>
           </div>
           <ul className={`${"list-group list-group-flush"} ${s.list}`}>
@@ -54,7 +51,6 @@ export default class Details extends React.Component {
               Status: {this.state.selectedOption}{" "}
             </li>
           </ul>
-          {console.log(this.state)}
         </div>
       </>
     );

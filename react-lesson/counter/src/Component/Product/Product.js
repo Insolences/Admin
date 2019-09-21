@@ -11,10 +11,16 @@ export default class Product extends React.Component {
     this.context.deleteProduct(this.props.id);
   };
 
-  renderImg = ()=>{
-    return (this.props.url?
-        <img src={this.props.url} className={`${"card-img-top "} ${s.img}`} alt="qwe" />:
-        <img src={img} className={`${"card-img-top "} ${s.img}`} alt="qwe" />)
+  renderImg = () => {
+    return this.props.url ? (
+      <img
+        src={this.props.url}
+        className={`${"card-img-top "} ${s.img}`}
+        alt="qwe"
+      />
+    ) : (
+      <img src={img} className={`${"card-img-top "} ${s.img}`} alt="qwe" />
+    );
   };
 
   renderProducts = () => {
@@ -22,13 +28,10 @@ export default class Product extends React.Component {
       {
         return (
           <div className="card-body">
-            <Link
-              to="/home/product/:id"
-              type="button"
-              className="btn btn-success"
-            >
-              Edit
-            </Link>
+            <button type="button" className="btn btn-success">
+              <Link to={`/admin/product/edit/${this.props.id}`}>Edit</Link>
+            </button>
+
             <button
               type="button"
               className="btn btn-warning"
@@ -42,26 +45,26 @@ export default class Product extends React.Component {
     } else
       return (
         <div className="card-body">
-          <Link
-            to={`/home/details/${this.props.id}`}
+          <button
             type="button"
             className="btn btn-info"
             onClick={this.stopPropagation}
           >
-            Details
-          </Link>
+            <Link to={`/home/details/${this.props.id}`}>Details</Link>
+          </button>
         </div>
       );
   };
 
   render() {
     return (
-      <div
-        className={`${s.card} ${
-          this.props.selectedOption == "Not In Stock" ? s.cardIsEmpty : " "
-        }`}
-      >
-          {this.renderImg()};
+      <div className={s.card}>
+        <div
+          className={`${
+            this.props.selectedOption == "Not In Stock" ? s.cardIsEmpty : " "
+          }`}
+        ></div>
+        {this.renderImg()};
         <div className="card-body">
           <h5 className="card-title">Title:{this.props.title}</h5>
         </div>
