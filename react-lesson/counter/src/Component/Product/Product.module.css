@@ -6,7 +6,7 @@
 }
 
 .card{
-    max-width: 20%;
+    max-width: 22%;
     margin-top: 15px;
     margin-right: 20px;
     background-color: #fff;
@@ -16,7 +16,7 @@
 .cardIsEmpty{
     position: absolute;
     left:0;
-    top: 191px;
+    top: 193px;
     height: 54%;
     width: 100%;
     z-index: 3;

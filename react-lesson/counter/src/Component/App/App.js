@@ -43,7 +43,6 @@ export default class App extends React.Component {
     let found = newProducts.some(el => {
       return el.id == id;
     });
-
     if (found) {
       alert("Товар с данным id существует");
     } else if (!found) {

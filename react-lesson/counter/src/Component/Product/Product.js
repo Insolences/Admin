@@ -64,7 +64,7 @@ export default class Product extends React.Component {
             this.props.selectedOption == "Not In Stock" ? s.cardIsEmpty : " "
           }`}
         ></div>
-        {this.renderImg()};
+        {this.renderImg()}
         <div className="card-body">
           <h5 className="card-title">Title:{this.props.title}</h5>
         </div>

@@ -42,82 +42,84 @@ export default class AddProduct extends React.Component {
       selectedOption: e.target.value
     });
   };
+  renderForm = () => {
+    return (
+      <form className={s.card}>
+        <div className="card-body">
+          <h5 className="card-title">
+            Product url: <Input type="text" ref={this.inputUrlRef} />
+          </h5>
+          <h5 className="card-title">
+            Card title: <Input type="text" ref={this.inputTitleRef} required />
+          </h5>
+        </div>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">
+            ID: <Input type="text" ref={this.inputIdRef} required />
+          </li>
+          <li className="list-group-item">
+            Price:{" "}
+            <Input
+              type="number"
+              ref={this.inputPriceRef}
+              pattern="\d+"
+              required
+            />
+          </li>
+          <li className="list-group-item">
+            Quantity:{" "}
+            <Input
+              type="number"
+              ref={this.inputQuantityRef}
+              pattern="\d+"
+              required
+            />
+          </li>
+        </ul>
+        <div className={`${"form-check "} ${s.radioCheck}`}>
+          <p>
+            <p>STATUS:</p>
+            <input
+              name="In Stock"
+              type="radio"
+              value="In Stock"
+              checked={this.state.selectedOption === "In Stock"}
+              onChange={this.handleOptionChange}
+            />
+            In Stock
+          </p>
+          <p>
+            <input
+              name="Not In Stock"
+              type="radio"
+              value="Not In Stock"
+              checked={this.state.selectedOption === "Not In Stock"}
+              onChange={this.handleOptionChange}
+            />
+            Not in Stock
+          </p>
+        </div>
+        <div className="card-body">
+          <Link to="/admin">
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={this.handleClick}
+            >
+              Add
+            </button>
+          </Link>
+        </div>
+      </form>
+    );
+  };
 
   render() {
     return (
       <>
         <Navigation />
         <h2 className={s.h2}>Add Product</h2>
-        <div className={s.addCard}>
-          <form className={s.card}>
-            <div className="card-body">
-              <h5 className="card-title">
-                Product url: <Input type="text" ref={this.inputUrlRef} />
-              </h5>
-              <h5 className="card-title">
-                Card title:{" "}
-                <Input type="text" ref={this.inputTitleRef} required />
-              </h5>
-            </div>
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item">
-                ID: <Input type="text" ref={this.inputIdRef} required />
-              </li>
-              <li className="list-group-item">
-                Price:{" "}
-                <Input
-                  type="number"
-                  ref={this.inputPriceRef}
-                  pattern="\d+"
-                  required
-                />
-              </li>
-              <li className="list-group-item">
-                Quantity:{" "}
-                <Input
-                  type="number"
-                  ref={this.inputQuantityRef}
-                  pattern="\d+"
-                  required
-                />
-              </li>
-            </ul>
-            <div className={`${"form-check "} ${s.radioCheck}`}>
-              <p>
-                <p>STATUS:</p>
-                <input
-                  name="In Stock"
-                  type="radio"
-                  value="In Stock"
-                  checked={this.state.selectedOption === "In Stock"}
-                  onChange={this.handleOptionChange}
-                />
-                In Stock
-              </p>
-              <p>
-                <input
-                  name="Not In Stock"
-                  type="radio"
-                  value="Not In Stock"
-                  checked={this.state.selectedOption === "Not In Stock"}
-                  onChange={this.handleOptionChange}
-                />
-                Not in Stock
-              </p>
-            </div>
-            <div className="card-body">
-              <Link to="/admin">
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={this.handleClick}
-                >
-                  Add
-                </button>
-              </Link>
-            </div>
-          </form>
-        </div>
+        <div className={s.addCard}>{this.renderForm()}</div>
       </>
     );
   }
