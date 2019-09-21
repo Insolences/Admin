@@ -62,7 +62,14 @@ export default class App extends React.Component {
         return item.id;
       })
       .indexOf(id);
-    ~idToEdit && newProducts.splice(idToEdit, 1, value);
+    let idProduct = value.id;
+    let found = newProducts.some(el => {
+      return el.id == idProduct;
+    });
+    if (idProduct == id || !found) {
+      ~idToEdit && newProducts.splice(idToEdit, 1, value);
+    } else return alert("Товар с данным id существует");
+
     this.setState({
       products: newProducts
     });
