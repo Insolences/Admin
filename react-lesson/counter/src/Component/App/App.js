@@ -38,19 +38,12 @@ export default class App extends React.Component {
   };
 
   addProduct = product => {
-    let found = this.state.products.some(el => {
-      return el.id === product.id;
+    let newProducts = this.state.products.slice();
+    newProducts.push(product);
+    this.setState({
+      products: newProducts
     });
-    if (found) {
-      alert("Товар с данным id существует");
-    } else {
-      let newProducts = this.state.products.slice();
-      newProducts.push(product);
-      this.setState({
-        products: newProducts
-      });
-      alert("Продукт добавлен");
-    }
+    alert("Продукт добавлен");
   };
 
   editProduct = (product, id) => {

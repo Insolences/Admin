@@ -8,7 +8,9 @@ import { Input } from "../Input";
 export default class Edit extends React.Component {
   static contextType = AppContext;
 
-  state = {};
+  state = {
+    inStock: "true"
+  };
 
   inputTitleRef = React.createRef();
   inputIdRef = React.createRef();
@@ -24,8 +26,7 @@ export default class Edit extends React.Component {
       price: item.price,
       image: item.image,
       id: item.id,
-      quantity: item.quantity,
-      inStock: item.inStock
+      quantity: item.quantity
     });
   }
 
