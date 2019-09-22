@@ -22,16 +22,16 @@ export default class Edit extends React.Component {
     this.setState({
       title: item.title,
       price: item.price,
-      url: item.url,
+      image: item.image,
       id: item.id,
       quantity: item.quantity,
-      selectedOption: item.selectedOption
+      inStock: item.inStock
     });
   }
 
   handleOptionChange = e => {
     this.setState({
-      selectedOption: e.target.value
+      inStock: e.target.value
     });
   };
 
@@ -39,17 +39,17 @@ export default class Edit extends React.Component {
     e.preventDefault();
     let product = {
       title: this.inputTitleRef.current.value,
-      url: this.inputUrlRef.current.value,
+      image: this.inputUrlRef.current.value,
       id: parseInt(this.inputIdRef.current.value),
       price: parseInt(this.inputPriceRef.current.value),
       quantity: parseInt(this.inputQuantityRef.current.value),
-      selectedOption: this.state.selectedOption === "true"
+      inStock: this.state.inStock === "true"
     };
     this.context.editProduct(product, this.state.id);
   };
 
   render() {
-    const { title, url, id, quantity, price } = this.state;
+    const { title, image, id, quantity, price } = this.state;
     return (
       <>
         <Navigation />
@@ -59,7 +59,11 @@ export default class Edit extends React.Component {
             <div className="card-body">
               <h5 className="card-title">
                 Product url:{" "}
-                <Input ref={this.inputUrlRef} type="text" defaultValue={url} />
+                <Input
+                  ref={this.inputUrlRef}
+                  type="text"
+                  defaultValue={image}
+                />
               </h5>
               <h5 className="card-title">
                 Card title:{" "}
@@ -104,7 +108,7 @@ export default class Edit extends React.Component {
                   name="In_Stock"
                   type="radio"
                   value="true"
-                  checked={this.state.selectedOption === "true"}
+                  checked={this.state.inStock === "true"}
                   onChange={this.handleOptionChange}
                 />
                 In Stock
@@ -114,7 +118,7 @@ export default class Edit extends React.Component {
                   name="In_Stock"
                   type="radio"
                   value="false"
-                  checked={this.state.selectedOption === "false"}
+                  checked={this.state.inStock === "false"}
                   onChange={this.handleOptionChange}
                 />
                 Not in Stock

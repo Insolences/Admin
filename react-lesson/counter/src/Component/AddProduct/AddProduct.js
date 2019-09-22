@@ -19,10 +19,10 @@ export default class AddProduct extends React.Component {
     e.preventDefault();
     let product = {
       title: this.inputTitleRef.current.value,
-      url: this.inputUrlRef.current.value,
+      image: this.inputUrlRef.current.value,
       price: parseInt(this.inputPriceRef.current.value),
       quantity: parseInt(this.inputQuantityRef.current.value),
-      selectedOption: this.state.selectedOption
+      inStock: this.state.inStock
     };
 
     this.context.addProduct(product);
@@ -34,7 +34,7 @@ export default class AddProduct extends React.Component {
 
   handleOptionChange = e => {
     this.setState({
-      selectedOption: e.target.value
+      inStock: e.target.value
     });
   };
 
@@ -76,7 +76,7 @@ export default class AddProduct extends React.Component {
               name="in_stock"
               type="radio"
               value="true"
-              checked={this.state.selectedOption === "true"}
+              checked={this.state.inStock === "true"}
               onChange={this.handleOptionChange}
             />
             In Stock
@@ -86,7 +86,7 @@ export default class AddProduct extends React.Component {
               name="in_stock"
               type="radio"
               value="false"
-              checked={this.state.selectedOption === "false"}
+              checked={this.state.inStock === "false"}
               onChange={this.handleOptionChange}
             />
             Not in Stock

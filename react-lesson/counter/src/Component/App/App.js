@@ -12,27 +12,27 @@ export default class App extends React.Component {
     products: [
       {
         id: 1,
-        title: "Honda Accord",
+        image: "https://a.d-cd.net/f3a2c4as-480.jpg",
+        inStock: true,
         price: 200000,
         quantity: 3,
-        selectedOption: true,
-        url: "https://a.d-cd.net/f3a2c4as-480.jpg"
+        title: "Honda Accord"
       },
       {
         id: 2,
-        title: "Audi A6",
+        image: "http://dom-cvety.com/photo/9-0/1134_rrrre-1920.jpg",
+        inStock: false,
         price: 450000,
         quantity: 0,
-        selectedOption: false,
-        url: "http://dom-cvety.com/photo/9-0/1134_rrrre-1920.jpg"
+        title: "Audi A6"
       },
       {
         id: 3,
-        title: "Ford",
+        image: "http://catalogcars.net/wp-content/uploads/2014/1/ford_42.jpg",
+        inStock: true,
         price: 600000,
         quantity: 3,
-        selectedOption: true,
-        url: "http://catalogcars.net/wp-content/uploads/2014/1/ford_42.jpg"
+        title: "Ford"
       }
     ]
   };
@@ -81,7 +81,7 @@ export default class App extends React.Component {
           products: this.state.products,
           addProduct: this.addProduct,
           deleteProduct: this.deleteProduct,
-          selectedOption: this.selectedOption,
+          inStock: this.inStock,
           editProduct: this.editProduct
         }}
       >

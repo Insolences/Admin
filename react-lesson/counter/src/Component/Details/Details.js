@@ -14,23 +14,23 @@ export default class Details extends React.Component {
     this.setState({
       title: item.title,
       price: item.price,
-      url: item.url,
+      image: item.image,
       id: item.id,
       quantity: item.quantity,
-      selectedOption: item.selectedOption
+      inStock: item.inStock
     });
   }
 
   renderImg = () => {
-    return this.state.url ? (
-      <img src={this.state.url} className={`${"card-img-top "}`} alt="qwe" />
+    return this.state.image ? (
+      <img src={this.state.image} className={`${"card-img-top "}`} alt="qwe" />
     ) : (
       <img src={img} className={`${"card-img-top "}`} alt="qwe" />
     );
   };
 
   render() {
-    const { title, price, id, quantity, selectedOption } = this.state;
+    const { title, price, id, quantity, inStock } = this.state;
     return (
       <>
         <Navigation />
@@ -45,7 +45,7 @@ export default class Details extends React.Component {
             <li className="list-group-item">Price: {price} $</li>
             <li className="list-group-item">Quantity: {quantity}</li>
             <li className="list-group-item">
-              Status: {selectedOption ? "In Stock" : "Not in Stock"}
+              Status: {inStock ? "In Stock" : "Not in Stock"}
             </li>
           </ul>
         </div>

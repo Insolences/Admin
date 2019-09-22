@@ -13,10 +13,10 @@ export default class Product extends React.Component {
   };
 
   renderImg = () => {
-    const { url } = this.props.product;
+    const { image } = this.props.product;
 
-    return url ? (
-      <img src={url} className={`${"card-img-top "} ${s.img}`} alt="qwe" />
+    return image ? (
+      <img src={image} className={`${"card-img-top "} ${s.img}`} alt="qwe" />
     ) : (
       <img src={img} className={`${"card-img-top "} ${s.img}`} alt="qwe" />
     );
@@ -54,11 +54,11 @@ export default class Product extends React.Component {
   };
 
   render() {
-    const { id, selectedOption, title, price, quantity } = this.props.product;
+    const { id, inStock, title, price, quantity } = this.props.product;
 
     return (
       <div className={s.card}>
-        <div className={`${selectedOption ? " " : s.cardIsEmpty}`} />
+        <div className={`${inStock ? " " : s.cardIsEmpty}`} />
         {this.renderImg()}
         <div className="card-body">
           <h5 className="card-title">Title:{title}</h5>
@@ -69,7 +69,7 @@ export default class Product extends React.Component {
           <li className="list-group-item">Quantity: {quantity}</li>
         </ul>
         <div className={`${"form-check "} ${s.radioCheck}`}>
-          <p>Status: {selectedOption ? "In Stock" : "Not in Stock"}</p>
+          <p>Status: {inStock ? "In Stock" : "Not in Stock"}</p>
         </div>
         {this.renderProducts()}
       </div>
