@@ -8,31 +8,26 @@ import { Navigation } from "../Navigation/Navigation";
 export default class AddProduct extends React.Component {
   static contextType = AppContext;
 
-  state = {
-    selectedOption: "In Stock"
-  };
+  state = {};
 
   inputTitleRef = React.createRef();
-  inputIdRef = React.createRef();
   inputPriceRef = React.createRef();
   inputQuantityRef = React.createRef();
   inputUrlRef = React.createRef();
 
   handleClick = e => {
     e.preventDefault();
-    let value = {
+    let product = {
       title: this.inputTitleRef.current.value,
       url: this.inputUrlRef.current.value,
-      id: parseInt(this.inputIdRef.current.value),
       price: parseInt(this.inputPriceRef.current.value),
       quantity: parseInt(this.inputQuantityRef.current.value),
       selectedOption: this.state.selectedOption
     };
 
-    this.context.addProduct(value);
+    this.context.addProduct(product);
 
     this.inputTitleRef.current.value = "";
-    this.inputIdRef.current.value = "";
     this.inputPriceRef.current.value = "";
     this.inputQuantityRef.current.value = "";
   };
@@ -42,6 +37,7 @@ export default class AddProduct extends React.Component {
       selectedOption: e.target.value
     });
   };
+
   renderForm = () => {
     return (
       <form className={s.card}>
@@ -54,9 +50,6 @@ export default class AddProduct extends React.Component {
           </h5>
         </div>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            ID: <Input type="text" ref={this.inputIdRef} required />
-          </li>
           <li className="list-group-item">
             Price:{" "}
             <Input
@@ -79,21 +72,21 @@ export default class AddProduct extends React.Component {
         <div className={`${"form-check "} ${s.radioCheck}`}>
           <p>
             <p>STATUS:</p>
-            <input
-              name="In Stock"
+            <Input
+              name="in_stock"
               type="radio"
-              value="In Stock"
-              checked={this.state.selectedOption === "In Stock"}
+              value="true"
+              checked={this.state.selectedOption === "true"}
               onChange={this.handleOptionChange}
             />
             In Stock
           </p>
           <p>
-            <input
-              name="Not In Stock"
+            <Input
+              name="in_stock"
               type="radio"
-              value="Not In Stock"
-              checked={this.state.selectedOption === "Not In Stock"}
+              value="false"
+              checked={this.state.selectedOption === "false"}
               onChange={this.handleOptionChange}
             />
             Not in Stock

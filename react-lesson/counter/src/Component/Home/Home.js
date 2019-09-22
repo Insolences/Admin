@@ -13,16 +13,7 @@ export default class Home extends React.Component {
         <h2 className={s.h2_home}>Product List</h2>
         <div className={s.cardGroup}>
           {this.context.products.map((el, index) => (
-            <Product
-              key={index}
-              title={el.title}
-              isAdmin={false}
-              id={el.id}
-              quantity={el.quantity}
-              price={el.price}
-              url={el.url}
-              selectedOption={el.selectedOption}
-            />
+            <Product key={index} product={el} isAdmin={false} />
           ))}
         </div>
       </>

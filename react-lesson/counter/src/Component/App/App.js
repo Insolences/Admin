@@ -11,63 +11,55 @@ export default class App extends React.Component {
   state = {
     products: [
       {
+        id: 1,
         title: "Honda Accord",
         price: 200000,
-        id: 1,
         quantity: 3,
-        selectedOption: "In Stock",
+        selectedOption: true,
         url: "https://a.d-cd.net/f3a2c4as-480.jpg"
       },
       {
+        id: 2,
         title: "Audi A6",
         price: 450000,
-        id: 2,
         quantity: 0,
-        selectedOption: "Not In Stock",
+        selectedOption: false,
         url: "http://dom-cvety.com/photo/9-0/1134_rrrre-1920.jpg"
       },
       {
+        id: 3,
         title: "Ford",
         price: 600000,
-        id: 3,
         quantity: 3,
-        selectedOption: "In Stock",
+        selectedOption: true,
         url: "http://catalogcars.net/wp-content/uploads/2014/1/ford_42.jpg"
       }
     ]
   };
 
-  addProduct = value => {
-    let newProducts = this.state.products.slice();
-    let id = value.id;
-    let found = newProducts.some(el => {
-      return el.id == id;
+  addProduct = product => {
+    let found = this.state.products.some(el => {
+      return el.id === product.id;
     });
     if (found) {
       alert("Товар с данным id существует");
-    } else if (!found) {
-      newProducts.push(value);
+    } else {
+      let newProducts = this.state.products.slice();
+      newProducts.push(product);
+      this.setState({
+        products: newProducts
+      });
       alert("Продукт добавлен");
     }
-    this.setState({
-      products: newProducts
-    });
   };
 
-  editProduct = (value, id) => {
-    let newProducts = this.state.products.slice();
-    let idToEdit = newProducts
-      .map(item => {
-        return item.id;
-      })
-      .indexOf(id);
-    let idProduct = value.id;
-    let found = newProducts.some(el => {
-      return el.id == idProduct;
+  editProduct = (product, id) => {
+    let newProducts = this.state.products.map(el => {
+      if (el.id !== id) {
+        return el;
+      }
+      return { ...el, ...product };
     });
-    if (idProduct == id || !found) {
-      ~idToEdit && newProducts.splice(idToEdit, 1, value);
-    } else return alert("Товар с данным id существует");
 
     this.setState({
       products: newProducts
@@ -75,13 +67,8 @@ export default class App extends React.Component {
   };
 
   deleteProduct = id => {
-    let newProducts = this.state.products.slice();
-    let idToDelete = newProducts
-      .map(item => {
-        return item.id;
-      })
-      .indexOf(id);
-    ~idToDelete && newProducts.splice(idToDelete, 1);
+    let newProducts = this.state.products.filter(e => e.id !== id);
+
     this.setState({
       products: newProducts
     });

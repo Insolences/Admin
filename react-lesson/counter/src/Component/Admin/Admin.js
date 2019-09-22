@@ -21,16 +21,7 @@ export default class Admin extends React.Component {
         </Link>
         <div className={s.cardGroup}>
           {this.context.products.map((el, index) => (
-            <Product
-              key={index}
-              title={el.title}
-              url={el.url}
-              isAdmin={true}
-              id={el.id}
-              quantity={el.quantity}
-              price={el.price}
-              selectedOption={el.selectedOption}
-            />
+            <Product product={el} key={index} isAdmin={true} />
           ))}
         </div>
       </>

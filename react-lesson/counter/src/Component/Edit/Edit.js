@@ -8,9 +8,7 @@ import { Input } from "../Input";
 export default class Edit extends React.Component {
   static contextType = AppContext;
 
-  state = {
-    selectedOption: "In Stock"
-  };
+  state = {};
 
   inputTitleRef = React.createRef();
   inputIdRef = React.createRef();
@@ -39,19 +37,19 @@ export default class Edit extends React.Component {
 
   handleClick = e => {
     e.preventDefault();
-    let value = {
+    let product = {
       title: this.inputTitleRef.current.value,
       url: this.inputUrlRef.current.value,
       id: parseInt(this.inputIdRef.current.value),
       price: parseInt(this.inputPriceRef.current.value),
       quantity: parseInt(this.inputQuantityRef.current.value),
-      selectedOption: this.state.selectedOption
+      selectedOption: this.state.selectedOption === "true"
     };
-    this.context.editProduct(value, this.state.id);
-    console.log(this.state.id);
+    this.context.editProduct(product, this.state.id);
   };
 
   render() {
+    const { title, url, id, quantity, price } = this.state;
     return (
       <>
         <Navigation />
@@ -61,18 +59,14 @@ export default class Edit extends React.Component {
             <div className="card-body">
               <h5 className="card-title">
                 Product url:{" "}
-                <Input
-                  ref={this.inputUrlRef}
-                  type="text"
-                  defaultValue={this.state.url}
-                />
+                <Input ref={this.inputUrlRef} type="text" defaultValue={url} />
               </h5>
               <h5 className="card-title">
                 Card title:{" "}
                 <Input
                   ref={this.inputTitleRef}
                   type="text"
-                  defaultValue={this.state.title}
+                  defaultValue={title}
                 />
               </h5>
             </div>
@@ -82,7 +76,8 @@ export default class Edit extends React.Component {
                 <Input
                   ref={this.inputIdRef}
                   type="text"
-                  defaultValue={this.state.id}
+                  disabled="true"
+                  defaultValue={id}
                 />
               </li>
               <li className="list-group-item">
@@ -90,7 +85,7 @@ export default class Edit extends React.Component {
                 <Input
                   ref={this.inputPriceRef}
                   type="number"
-                  defaultValue={this.state.price}
+                  defaultValue={price}
                 />
               </li>
               <li className="list-group-item">
@@ -98,7 +93,7 @@ export default class Edit extends React.Component {
                 <Input
                   ref={this.inputQuantityRef}
                   type="number"
-                  defaultValue={this.state.quantity}
+                  defaultValue={quantity}
                 />
               </li>
             </ul>
@@ -106,20 +101,20 @@ export default class Edit extends React.Component {
               <p>
                 <p>STATUS:</p>
                 <input
-                  ref={this}
+                  name="In_Stock"
                   type="radio"
-                  value="In Stock"
-                  checked={this.state.selectedOption === "In Stock"}
+                  value="true"
+                  checked={this.state.selectedOption === "true"}
                   onChange={this.handleOptionChange}
                 />
                 In Stock
               </p>
               <p>
-                <input
-                  name="Not In Stock"
+                <Input
+                  name="In_Stock"
                   type="radio"
-                  value="Not In Stock"
-                  checked={this.state.selectedOption === "Not In Stock"}
+                  value="false"
+                  checked={this.state.selectedOption === "false"}
                   onChange={this.handleOptionChange}
                 />
                 Not in Stock

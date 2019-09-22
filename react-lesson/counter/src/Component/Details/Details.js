@@ -23,17 +23,14 @@ export default class Details extends React.Component {
 
   renderImg = () => {
     return this.state.url ? (
-      <img
-        src={this.state.url}
-        className={`${"card-img-top "} ${s.img}`}
-        alt="qwe"
-      />
+      <img src={this.state.url} className={`${"card-img-top "}`} alt="qwe" />
     ) : (
-      <img src={img} className={`${"card-img-top "} ${s.img}`} alt="qwe" />
+      <img src={img} className={`${"card-img-top "}`} alt="qwe" />
     );
   };
 
   render() {
+    const { title, price, id, quantity, selectedOption } = this.state;
     return (
       <>
         <Navigation />
@@ -41,14 +38,14 @@ export default class Details extends React.Component {
         <div className={`${"card "} ${s.card}`}>
           {this.renderImg()}
           <div className={`${"card-body "} ${s.body}`}>
-            <h5 className="card-title">Title: {this.state.title}</h5>
+            <h5 className="card-title">Title: {title}</h5>
           </div>
           <ul className={`${"list-group list-group-flush"} ${s.list}`}>
-            <li className="list-group-item">ID: {this.state.id}</li>
-            <li className="list-group-item">Price: {this.state.price} $</li>
-            <li className="list-group-item">Quantity: {this.state.quantity}</li>
+            <li className="list-group-item">ID: {id}</li>
+            <li className="list-group-item">Price: {price} $</li>
+            <li className="list-group-item">Quantity: {quantity}</li>
             <li className="list-group-item">
-              Status: {this.state.selectedOption}{" "}
+              Status: {selectedOption ? "In Stock" : "Not in Stock"}
             </li>
           </ul>
         </div>
