@@ -22,7 +22,7 @@ export default class Product extends React.Component {
     );
   };
 
-  renderProducts = () => {
+  renderButtons = () => {
     const { id } = this.props.product;
 
     if (this.props.isAdmin) {
@@ -71,7 +71,7 @@ export default class Product extends React.Component {
         <div className={`${"form-check "} ${s.radioCheck}`}>
           <p>Status: {inStock ? "In Stock" : "Not in Stock"}</p>
         </div>
-        {this.renderProducts()}
+        {this.renderButtons()}
       </div>
     );
   }

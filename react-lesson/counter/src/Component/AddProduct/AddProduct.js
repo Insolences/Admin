@@ -4,7 +4,7 @@ import { AppContext } from "../../Context";
 import s from "./AddProduct.module.css";
 import { Input } from "../Input";
 import { Navigation } from "../Navigation/Navigation";
-
+import { API } from "../API";
 export default class AddProduct extends React.Component {
   static contextType = AppContext;
 
@@ -14,6 +14,10 @@ export default class AddProduct extends React.Component {
   inputPriceRef = React.createRef();
   inputQuantityRef = React.createRef();
   inputUrlRef = React.createRef();
+
+  async addProduct(product) {
+    let res = await API.addProduct(product);
+  }
 
   handleClick = e => {
     e.preventDefault();
@@ -25,7 +29,7 @@ export default class AddProduct extends React.Component {
       inStock: this.state.inStock
     };
 
-    this.context.addProduct(product);
+    this.addProduct(product).then(res => console.log(res));
 
     this.inputTitleRef.current.value = "";
     this.inputPriceRef.current.value = "";
