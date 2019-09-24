@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import s from "./Admin.module.css";
-import { AppContext } from "../../Context";
 import ProductList from "../ProductsList/ProductList";
 
 export default class Admin extends React.Component {
-  static contextType = AppContext;
   render() {
     return (
       <>

@@ -1,16 +1,15 @@
 import React from "react";
 import Product from "../Product/Product";
 import s from "./ProductList.module.css";
-import { AppContext } from "../../Context";
 import { Navigation } from "../Navigation/Navigation";
 import { API } from "../API";
 
 export default class ProductList extends React.Component {
-  static contextType = AppContext;
 
   state = {
     products: []
   };
+
 
   componentDidMount() {
     API.getProductsList().then(res => {
@@ -18,7 +17,7 @@ export default class ProductList extends React.Component {
         alert("Что то пошло не так");
       }
       this.setState({
-        products: res.body
+        products: res.body,
       });
     });
   }
@@ -30,7 +29,7 @@ export default class ProductList extends React.Component {
         <h2 className={s.h2_home}>Product List</h2>
         <div className={s.cardGroup}>
           {this.state.products.map((el, index) => (
-            <Product key={index} product={el} />
+            <Product key={index} product={el} isAdmin={this.props.isAdmin} />
           ))}
         </div>
       </>

@@ -1,36 +1,36 @@
 import React from "react";
 import s from "./Details.module.css";
 import img from "../../qwe.jpg";
-import { AppContext } from "../../Context";
 import { Navigation } from "../Navigation/Navigation";
+import {API} from "../API";
 
 export default class Details extends React.Component {
-  static contextType = AppContext;
-  state = {};
+  state = {
+    product:{}
+  };
 
-  componentDidMount() {
-    const id = parseInt(this.props.match.params.id);
-    const item = this.context.products.find(el => el.id === id);
-    this.setState({
-      title: item.title,
-      price: item.price,
-      image: item.image,
-      id: item.id,
-      quantity: item.quantity,
-      inStock: item.inStock
-    });
-  }
+    componentDidMount() {
+        const id = parseInt(this.props.match.params.id);
+        API.getProduct(id).then(res => {
+            if (res.status !== 200) {
+                alert("Что то пошло не так");
+            }
+            this.setState({
+                product: res.body,
+            });
+        });
+    }
 
   renderImg = () => {
-    return this.state.image ? (
-      <img src={this.state.image} className={`${"card-img-top "}`} alt="qwe" />
+    return this.state.product.image ? (
+      <img src={this.state.product.image} className={`${"card-img-top "}`} alt="qwe" />
     ) : (
       <img src={img} className={`${"card-img-top "}`} alt="qwe" />
     );
   };
 
   render() {
-    const { title, price, id, quantity, inStock } = this.state;
+    const { title, price, id, quantity, inStock } = this.state.product;
     return (
       <>
         <Navigation />

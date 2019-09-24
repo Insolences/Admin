@@ -2,14 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom";
 import img from "../../qwe.jpg";
 import s from "./Product.module.css";
-import { AppContext } from "../../Context";
+import {API} from "../API";
+import { Redirect } from 'react-router';
 
 export default class Product extends React.Component {
-  static contextType = AppContext;
+
+  state={
+      products: this.props.product,
+      redirect: false
+  };
+
+    async deleteProduct (id){
+        let res = await API.deleteProduct(id);
+    };
 
   clickDeleteHandler = e => {
     e.preventDefault();
-    this.context.deleteProduct(this.props.product.id);
+    this.deleteProduct(this.state.products.id).then(() =>{
+        this.setState({
+            redirect: true
+        });
+        console.log('Removed product')
+    }).catch((err)=>{
+        console.log(err)
+    });
   };
 
   renderImg = () => {
@@ -38,7 +54,7 @@ export default class Product extends React.Component {
               className="btn btn-warning"
               onClick={this.clickDeleteHandler}
             >
-              Delete
+                <Link to={`/admin`}>Delete</Link>
             </button>
           </div>
         );
@@ -55,7 +71,9 @@ export default class Product extends React.Component {
 
   render() {
     const { id, inStock, title, price, quantity } = this.props.product;
-
+      if (this.state.redirect){
+          return <Redirect push to="/admin" />;
+      }
     return (
       <div className={s.card}>
         <div className={`${inStock ? " " : s.cardIsEmpty}`} />

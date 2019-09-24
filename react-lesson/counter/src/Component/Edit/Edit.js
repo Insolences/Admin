@@ -1,15 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { AppContext } from "../../Context";
+import {Link, Redirect} from "react-router-dom";
 import s from "./Edit.module.css";
 import { Navigation } from "../Navigation/Navigation";
 import { Input } from "../Input";
+import {API} from "../API";
 
 export default class Edit extends React.Component {
-  static contextType = AppContext;
 
   state = {
-    inStock: "true"
+    products:{},
+    inStock: "true",
+    redirect:false
   };
 
   inputTitleRef = React.createRef();
@@ -20,14 +21,14 @@ export default class Edit extends React.Component {
 
   componentDidMount() {
     const id = parseInt(this.props.match.params.id);
-    const item = this.context.products.find(el => el.id === id);
-    this.setState({
-      title: item.title,
-      price: item.price,
-      image: item.image,
-      id: item.id,
-      quantity: item.quantity
-    });
+      API.getProduct(id).then(res => {
+          if (res.status !== 200) {
+              alert("Что то пошло не так");
+          }
+          this.setState({
+              products: res.body,
+          });
+      });
   }
 
   handleOptionChange = e => {
@@ -35,6 +36,10 @@ export default class Edit extends React.Component {
       inStock: e.target.value
     });
   };
+
+    async editProduct(id, product) {
+        let res = await API.editProduct(id, product);
+    }
 
   handleClick = e => {
     e.preventDefault();
@@ -46,11 +51,26 @@ export default class Edit extends React.Component {
       quantity: parseInt(this.inputQuantityRef.current.value),
       inStock: this.state.inStock === "true"
     };
-    this.context.editProduct(product, this.state.id);
+      const id = parseInt(this.props.match.params.id);
+      this.editProduct(id, product).then(() => {
+          this.setState({
+             redirect: true
+          });
+          console.log('EDIT product')
+      }).catch((err)=>{
+          alert('что то пошло не так ' + err)
+      });
+
   };
 
+    redirectToAdmin = ()=>{
+        if (this.state.redirect){
+            return <Redirect push to='/admin'/>
+        }
+    };
+
   render() {
-    const { title, image, id, quantity, price } = this.state;
+    const { title, image, id, quantity, price } = this.state.products;
     return (
       <>
         <Navigation />
@@ -103,7 +123,7 @@ export default class Edit extends React.Component {
               </li>
             </ul>
             <div className={`${"form-check "} ${s.radioCheck}`}>
-              <p>
+              <div>
                 <p>STATUS:</p>
                 <input
                   name="In_Stock"
@@ -113,7 +133,7 @@ export default class Edit extends React.Component {
                   onChange={this.handleOptionChange}
                 />
                 In Stock
-              </p>
+              </div>
               <p>
                 <Input
                   name="In_Stock"
@@ -126,12 +146,13 @@ export default class Edit extends React.Component {
               </p>
             </div>
             <div className="card-body">
+                {this.redirectToAdmin()}
               <button
                 type="button"
                 className="btn btn-success"
                 onClick={this.handleClick}
               >
-                <Link to="/admin">EDIT</Link>
+                EDIT
               </button>
             </div>
           </form>

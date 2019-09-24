@@ -1,14 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { AppContext } from "../../Context";
 import s from "./AddProduct.module.css";
 import { Input } from "../Input";
 import { Navigation } from "../Navigation/Navigation";
 import { API } from "../API";
-export default class AddProduct extends React.Component {
-  static contextType = AppContext;
+import { Redirect } from 'react-router'
 
-  state = {};
+export default class AddProduct extends React.Component {
+
+  state = {
+      inStock: "true",
+      redirect: false
+  };
 
   inputTitleRef = React.createRef();
   inputPriceRef = React.createRef();
@@ -26,20 +28,35 @@ export default class AddProduct extends React.Component {
       image: this.inputUrlRef.current.value,
       price: parseInt(this.inputPriceRef.current.value),
       quantity: parseInt(this.inputQuantityRef.current.value),
-      inStock: this.state.inStock
+      inStock: this.state.inStock === 'true'
     };
 
-    this.addProduct(product).then(res => console.log(res));
+    this.addProduct(product).then(() =>{
+        this.setState({
+           redirect: true
+        });
+        console.log('Add product')
+    }).catch((err)=>{
+        alert('что то пошло не так ' + err)
+    });
+
 
     this.inputTitleRef.current.value = "";
     this.inputPriceRef.current.value = "";
     this.inputQuantityRef.current.value = "";
   };
 
+
   handleOptionChange = e => {
     this.setState({
       inStock: e.target.value
     });
+  };
+
+  redirectToAdmin = ()=>{
+      if (this.state.redirect){
+          return <Redirect push to='/admin'/>
+      }
   };
 
   renderForm = () => {
@@ -74,7 +91,7 @@ export default class AddProduct extends React.Component {
           </li>
         </ul>
         <div className={`${"form-check "} ${s.radioCheck}`}>
-          <p>
+          <div>
             <p>STATUS:</p>
             <Input
               name="in_stock"
@@ -84,7 +101,7 @@ export default class AddProduct extends React.Component {
               onChange={this.handleOptionChange}
             />
             In Stock
-          </p>
+          </div>
           <p>
             <Input
               name="in_stock"
@@ -97,7 +114,7 @@ export default class AddProduct extends React.Component {
           </p>
         </div>
         <div className="card-body">
-          <Link to="/admin">
+            {this.redirectToAdmin()}
             <button
               type="button"
               className="btn btn-success"
@@ -105,7 +122,7 @@ export default class AddProduct extends React.Component {
             >
               Add
             </button>
-          </Link>
+
         </div>
       </form>
     );
