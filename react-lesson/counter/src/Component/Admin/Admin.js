@@ -4,7 +4,9 @@ import s from "./Admin.module.css";
 import ProductList from "../ProductsList/ProductList";
 
 export default class Admin extends React.Component {
-  render() {
+
+    render() {
+
     return (
       <>
         <Link

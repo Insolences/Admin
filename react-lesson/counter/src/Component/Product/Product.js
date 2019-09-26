@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import img from "../../qwe.jpg";
 import s from "./Product.module.css";
-import {API} from "../API";
 import { Redirect } from 'react-router';
 
 export default class Product extends React.Component {
@@ -11,21 +10,16 @@ export default class Product extends React.Component {
       products: this.props.product,
       redirect: false
   };
-
-    async deleteProduct (id){
-        let res = await API.deleteProduct(id);
-    };
-
-  clickDeleteHandler = e => {
-    e.preventDefault();
-    this.deleteProduct(this.state.products.id).then(() =>{
+    componentDidMount(){
         this.setState({
-            redirect: true
+            products: this.props.product
         });
-        console.log('Removed product')
-    }).catch((err)=>{
-        console.log(err)
-    });
+    }
+
+  clickToDelete = e => {
+    e.preventDefault();
+    let id = this.state.products.id;
+    this.props.ToDelete(id);
   };
 
   renderImg = () => {
@@ -45,35 +39,42 @@ export default class Product extends React.Component {
       {
         return (
           <div className="card-body">
-            <button type="button" className="btn btn-success">
-              <Link to={`/admin/product/edit/${id}`}>Edit</Link>
-            </button>
-
-            <button
-              type="button"
-              className="btn btn-warning"
-              onClick={this.clickDeleteHandler}
-            >
-                <Link to={`/admin`}>Delete</Link>
-            </button>
+              <Link to={`/admin/product/edit/${id}`}>
+                <button type="button" className="btn btn-success">
+                  Edit
+                </button>
+              </Link>
+              <Link to={`/admin`}>
+                <button
+                  type="button"
+                  className="btn btn-warning"
+                  onClick={this.clickToDelete}
+                >
+                   Delete
+                </button>
+              </Link>
           </div>
         );
       }
     } else
       return (
         <div className="card-body">
-          <button type="button" className="btn btn-info">
-            <Link to={`/home/details/${id}`}>Details</Link>
-          </button>
+            <Link to={`/home/details/${id}`}>
+              <button type="button" className="btn btn-info">
+                Details
+              </button>
+            </Link>
         </div>
       );
   };
 
   render() {
-    const { id, inStock, title, price, quantity } = this.props.product;
       if (this.state.redirect){
+
           return <Redirect push to="/admin" />;
       }
+    const { id, inStock, title, price, quantity } = this.props.product;
+
     return (
       <div className={s.card}>
         <div className={`${inStock ? " " : s.cardIsEmpty}`} />

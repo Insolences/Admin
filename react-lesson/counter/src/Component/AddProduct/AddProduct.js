@@ -53,18 +53,13 @@ export default class AddProduct extends React.Component {
     });
   };
 
-  redirectToAdmin = ()=>{
-      if (this.state.redirect){
-          return <Redirect push to='/admin'/>
-      }
-  };
 
   renderForm = () => {
     return (
       <form className={s.card}>
         <div className="card-body">
           <h5 className="card-title">
-            Product url: <Input type="text" ref={this.inputUrlRef} />
+            Product img url: <Input type="text" ref={this.inputUrlRef} />
           </h5>
           <h5 className="card-title">
             Card title: <Input type="text" ref={this.inputTitleRef} required />
@@ -114,7 +109,6 @@ export default class AddProduct extends React.Component {
           </p>
         </div>
         <div className="card-body">
-            {this.redirectToAdmin()}
             <button
               type="button"
               className="btn btn-success"
@@ -129,6 +123,9 @@ export default class AddProduct extends React.Component {
   };
 
   render() {
+      if (this.state.redirect){
+          return <Redirect push to='/admin'/>
+      }
     return (
       <>
         <Navigation />

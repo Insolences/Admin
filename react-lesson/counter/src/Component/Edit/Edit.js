@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, Redirect} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import s from "./Edit.module.css";
 import { Navigation } from "../Navigation/Navigation";
 import { Input } from "../Input";
@@ -63,13 +63,10 @@ export default class Edit extends React.Component {
 
   };
 
-    redirectToAdmin = ()=>{
-        if (this.state.redirect){
-            return <Redirect push to='/admin'/>
-        }
-    };
-
   render() {
+      if (this.state.redirect){
+          return <Redirect push to='/admin'/>
+      }
     const { title, image, id, quantity, price } = this.state.products;
     return (
       <>
@@ -146,7 +143,6 @@ export default class Edit extends React.Component {
               </p>
             </div>
             <div className="card-body">
-                {this.redirectToAdmin()}
               <button
                 type="button"
                 className="btn btn-success"
